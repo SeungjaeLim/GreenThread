@@ -3,9 +3,9 @@ import { Button, Container, Typography, Box, Modal, Card, CardMedia, CardContent
 import { CntContext } from '../CntContext';
 
 const badgeImages = [
-  { id: 1, image: '/assets/badge1.png' },
-  { id: 2, image: '/assets/badge2.png' },
-  { id: 3, image: '/assets/badge3.png' },
+  { id: 1, image: '/assets/Badge1.png' },
+  { id: 2, image: '/assets/Badge2.png' },
+  { id: 3, image: '/assets/Badge3.png' },
 ];
 
 const MainScreen = () => {
@@ -42,7 +42,7 @@ const MainScreen = () => {
     setOpen(false);
   };
 
-  const currentBadge = badgeImages[(cnt + 1) % badgeImages.length];
+  const currentBadge = badgeImages[(cnt) % badgeImages.length];
 
   return (
     <Container>
@@ -64,9 +64,6 @@ const MainScreen = () => {
       <Box display="flex" justifyContent="center" m={1}>
         <Typography variant="h6">Distance: {distance} meters</Typography>
       </Box>
-      <Box display="flex" justifyContent="center" m={1}>
-        <Typography variant="h6">CNT Badges: {cnt}</Typography>
-      </Box>
       <Modal
         open={open}
         onClose={handleClose}
@@ -82,15 +79,9 @@ const MainScreen = () => {
             <Card>
               <CardMedia
                 component="img"
-                height="140"
+                height="280"
                 image={currentBadge.image}
-                alt={`Badge ${cnt + 1}`}
               />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Badge {cnt + 1}
-                </Typography>
-              </CardContent>
             </Card>
           )}
           <Button variant="contained" color="primary" onClick={handleClose}>Close</Button>

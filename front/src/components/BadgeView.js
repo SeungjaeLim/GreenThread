@@ -3,9 +3,9 @@ import { Container, Typography, Box, Grid, Card, CardMedia, CardContent } from '
 
 const BadgeView = () => {
   const badges = [
-    { id: 1, name: 'Badge 1', image: '/assets/badge1.png' },
-    { id: 2, name: 'Badge 2', image: '/assets/badge2.png' },
-    { id: 3, name: 'Badge 3', image: '/assets/badge3.png' },
+    { id: 1, name: 'Badge 1', image: '/assets/Badge1.png' },
+    { id: 2, name: 'Badge 2', image: '/assets/Badge2.png' },
+    { id: 3, name: 'Badge 3', image: '/assets/Badge3.png' },
   ];
 
   return (
@@ -18,15 +18,9 @@ const BadgeView = () => {
               <Card>
                 <CardMedia
                   component="img"
-                  height="140"
+                  height="280"
                   image={badge.image}
-                  alt={badge.name}
                 />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {badge.name}
-                  </Typography>
-                </CardContent>
               </Card>
             </Grid>
           ))}

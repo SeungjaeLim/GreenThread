@@ -3,9 +3,9 @@ import { Container, Typography, Box, Grid, Card, CardMedia, CardContent } from '
 import { CntContext } from '../CntContext';
 
 const badgeImages = [
-  { id: 1, image: '/assets/badge1.png' },
-  { id: 2, image: '/assets/badge2.png' },
-  { id: 3, image: '/assets/badge3.png' },
+  { id: 1, image: '/assets/Badge1.png' },
+  { id: 2, image: '/assets/Badge2.png' },
+  { id: 3, image: '/assets/Badge3.png' },
 ];
 
 const MyBadgeView = () => {
@@ -20,15 +20,9 @@ const MyBadgeView = () => {
           <Card>
             <CardMedia
               component="img"
-              height="140"
+              height="280"
               image={badge.image}
-              alt={`Badge ${i + 1}`}
             />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Badge {i + 1}
-              </Typography>
-            </CardContent>
           </Card>
         </Grid>
       );
