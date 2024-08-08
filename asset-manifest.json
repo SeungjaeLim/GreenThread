@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/greenthread/static/css/main.e6c13ad2.css",
-    "main.js": "/greenthread/static/js/main.0c687747.js",
-    "index.html": "/greenthread/index.html",
-    "main.e6c13ad2.css.map": "/greenthread/static/css/main.e6c13ad2.css.map",
-    "main.0c687747.js.map": "/greenthread/static/js/main.0c687747.js.map"
+    "main.css": "/GreenThread/static/css/main.e6c13ad2.css",
+    "main.js": "/GreenThread/static/js/main.0c687747.js",
+    "index.html": "/GreenThread/index.html",
+    "main.e6c13ad2.css.map": "/GreenThread/static/css/main.e6c13ad2.css.map",
+    "main.0c687747.js.map": "/GreenThread/static/js/main.0c687747.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
