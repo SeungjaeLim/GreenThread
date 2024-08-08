@@ -3,9 +3,9 @@ import { Container, Typography, Box, Grid, Card, CardMedia, CardContent } from '
 
 const BadgeView = () => {
   const badges = [
-    { id: 1, name: 'Badge 1', image: '/assets/Badge1.png' },
-    { id: 2, name: 'Badge 2', image: '/assets/Badge2.png' },
-    { id: 3, name: 'Badge 3', image: '/assets/Badge3.png' },
+    { id: 1, image: `${process.env.PUBLIC_URL}/assets/Badge1.png` },
+    { id: 2, image: `${process.env.PUBLIC_URL}/assets/Badge2.png` },
+    { id: 3, image: `${process.env.PUBLIC_URL}/assets/Badge3.png` },
   ];
 
   return (

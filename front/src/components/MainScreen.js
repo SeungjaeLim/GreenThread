@@ -3,9 +3,9 @@ import { Button, Container, Typography, Box, Modal, Card, CardMedia, CardContent
 import { CntContext } from '../CntContext';
 
 const badgeImages = [
-  { id: 1, image: '/assets/Badge1.png' },
-  { id: 2, image: '/assets/Badge2.png' },
-  { id: 3, image: '/assets/Badge3.png' },
+  { id: 1, image: `${process.env.PUBLIC_URL}/assets/Badge1.png` },
+  { id: 2, image: `${process.env.PUBLIC_URL}/assets/Badge2.png` },
+  { id: 3, image: `${process.env.PUBLIC_URL}/assets/Badge3.png` },
 ];
 
 const MainScreen = () => {
