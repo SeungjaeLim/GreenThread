@@ -22,10 +22,10 @@ class UserRegisterRequest(BaseModel):
 
 class CharacterGenerateRequest(BaseModel):
     user_id: str
+    name: str  # Add this line to include the name attribute
     theme: str
     color: str
     animal: str
-
 
 @router.post("/register")
 def register_user(request: UserRegisterRequest, db: Session = Depends(get_db)):
@@ -56,19 +56,28 @@ def generate_character(request: CharacterGenerateRequest, db: Session = Depends(
     if not user:
         raise HTTPException(status_code=404, detail="User not found.")
     
-    image_path = generate_character_image(request.theme, request.color, request.animal)
-    
+    # First, create a new character record with a placeholder image path
     new_character = Character(
-        user_id=request.user_id,  # Use the user_id from the request
-        image_url=image_path,
+        user_id=request.user_id,
+        name=request.name,
+        image_url="",  # Placeholder, will update after generating the image
         theme=request.theme,
         color=request.color,
         animal=request.animal
     )
     
     db.add(new_character)
+    db.commit()  # Commit to generate the character ID
+
+    # Generate the image using the new character ID
+    image_path = generate_character_image(new_character.id, request.theme, request.color, request.animal)
+
+    # Update the character record with the actual image path
+    new_character.image_url = image_path
     db.commit()
-    return FileResponse(image_path, media_type="image/png")
+
+    return {"message": "Character created successfully", "character_id": new_character.id}
+
 
 
 @router.get("/view_user/{user_id}")
@@ -77,15 +86,16 @@ def view_user(user_id: str, db: Session = Depends(get_db)):
     return [
         {
             "id": char.id,
+            "user_id": char.user_id,
+            "name": char.name,  # Include character name
             "image_url": char.image_url,
             "theme": char.theme,
             "color": char.color,
             "animal": char.animal,
-            "like_count": char.like_count  # Include like_count
+            "like_count": char.like_count
         } 
         for char in characters
     ]
-
 
 @router.get("/view_all")
 def view_all(db: Session = Depends(get_db)):
@@ -93,11 +103,13 @@ def view_all(db: Session = Depends(get_db)):
     return [
         {
             "id": char.id,
+            "user_id": char.user_id,
+            "name": char.name,  # Include character name
             "image_url": char.image_url,
             "theme": char.theme,
             "color": char.color,
             "animal": char.animal,
-            "like_count": char.like_count  # Include like_count
+            "like_count": char.like_count
         }
         for char in characters
     ]

@@ -8,15 +8,15 @@ import config
 
 IMAGE_STORAGE_PATH = "images/"
 
-def generate_character_image(theme: str, color: str, animal: str) -> str:
+def generate_character_image(character_id: int, theme: str, color: str, animal: str) -> str:
     client = openai.OpenAI(api_key=config.OPENAI_API_KEY)
     prompt = f"A {color} {animal} in the theme of {theme}"
     response = client.images.generate(
-    model="dall-e-3",
-    prompt= prompt,
-    size="1024x1024",
-    quality="standard",
-    n=1,
+        model="dall-e-3",
+        prompt= prompt,
+        size="1024x1024",
+        quality="standard",
+        n=1,
     )
     image_url = response.data[0].url
     
@@ -26,8 +26,8 @@ def generate_character_image(theme: str, color: str, animal: str) -> str:
     # Ensure the directory exists
     os.makedirs(IMAGE_STORAGE_PATH, exist_ok=True)
     
-    # Generate a unique filename
-    filename = f"{theme}_{color}_{animal}.png"
+    # Save the image using the character_id
+    filename = f"{character_id}.png"
     file_path = os.path.join(IMAGE_STORAGE_PATH, filename)
     
     # Save the image locally

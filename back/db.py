@@ -21,12 +21,13 @@ class Character(Base):
     __tablename__ = 'characters'
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(String(50), nullable=False)  # Matches the User.id
+    user_id = Column(String(50), nullable=False)
+    name = Column(String(50), nullable=False)  # New field for character name
     image_url = Column(String(255), nullable=False)
     theme = Column(String(50), nullable=False)
     color = Column(String(50), nullable=False)
     animal = Column(String(50), nullable=False)
-    like_count = Column(Integer, default=0) 
+    like_count = Column(Integer, default=0)  # Field to store the count of likes
 
 def init_db():
     Base.metadata.create_all(bind=engine)
