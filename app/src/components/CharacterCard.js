@@ -14,6 +14,9 @@ const CharacterCard = ({ character, onLike }) => {
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/v1/image/${character.id}`, {
           responseType: 'blob',
+          headers: {
+            'ngrok-skip-browser-warning': true,
+          },
         });
         const imageUrl = URL.createObjectURL(response.data);
         setImageSrc(imageUrl);
