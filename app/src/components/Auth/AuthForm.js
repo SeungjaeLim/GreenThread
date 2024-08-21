@@ -6,25 +6,33 @@ import logo from '../../assets/images/logo.png';
 const AuthForm = ({ isRegistering, onAuthSuccess, onSwitchMode }) => {
   const [id, setId] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [confirmPhoneNumber, setConfirmPhoneNumber] = useState(''); // Added for verification
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (isRegistering && phoneNumber !== confirmPhoneNumber) {
+      setError('전화번호가 일치하지 않습니다.');
+      return;
+    }
+
     try {
       if (isRegistering) {
         await registerUser(id, phoneNumber);
-        setSuccess('Registration successful! You can now log in.');
+        setSuccess('회원가입이 완료되었습니다. 로그인해주세요.');
         setError('');
         setId('');
         setPhoneNumber('');
+        setConfirmPhoneNumber(''); // Clear confirmation field
         onSwitchMode(); // Switch back to login mode after registration
       } else {
         await loginUser(id, phoneNumber);
         onAuthSuccess(id);
       }
     } catch (err) {
-      setError(isRegistering ? 'Registration failed' : 'Login failed');
+      setError(isRegistering ? '해당 ID로 회원가입한 기록이 존재합니다.' : 'ID와 전화번호를 다시 확인해주세요.');
       setSuccess('');
     }
   };
@@ -53,8 +61,18 @@ const AuthForm = ({ isRegistering, onAuthSuccess, onSwitchMode }) => {
           required
           margin="normal"
         />
+        {isRegistering && (
+          <TextField
+            label="전화번호 확인"
+            value={confirmPhoneNumber}
+            onChange={(e) => setConfirmPhoneNumber(e.target.value)}
+            fullWidth
+            required
+            margin="normal"
+          />
+        )}
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          {isRegistering ? '회원가입' : 'Login'}
+          {isRegistering ? '회원가입' : '로그인'}
         </Button>
       </form>
       <Typography variant="body2" align="center" marginTop={2}>
