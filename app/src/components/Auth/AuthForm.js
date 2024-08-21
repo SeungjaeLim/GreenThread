@@ -38,7 +38,7 @@ const AuthForm = ({ isRegistering, onAuthSuccess, onSwitchMode }) => {
       {success && <Alert severity="success">{success}</Alert>}
       <form onSubmit={handleSubmit}>
         <TextField
-          label="Username"
+          label="ID"
           value={id}
           onChange={(e) => setId(e.target.value)}
           fullWidth
@@ -46,7 +46,7 @@ const AuthForm = ({ isRegistering, onAuthSuccess, onSwitchMode }) => {
           margin="normal"
         />
         <TextField
-          label="Phone Number"
+          label="전화번호"
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
           fullWidth
@@ -54,22 +54,22 @@ const AuthForm = ({ isRegistering, onAuthSuccess, onSwitchMode }) => {
           margin="normal"
         />
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          {isRegistering ? 'Register' : 'Login'}
+          {isRegistering ? '회원가입' : 'Login'}
         </Button>
       </form>
       <Typography variant="body2" align="center" marginTop={2}>
         {isRegistering ? (
           <>
-            Already have an account?{' '}
+            계정이 있으신가요?{' '}
             <Link component="button" variant="body2" onClick={onSwitchMode}>
-              Login here
+              로그인
             </Link>
           </>
         ) : (
           <>
-            Don't have an account?{' '}
+            계정이 없으신가요?{' '}
             <Link component="button" variant="body2" onClick={onSwitchMode}>
-              Register here
+              회원가입
             </Link>
           </>
         )}

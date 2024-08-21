@@ -50,6 +50,14 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
     const seconds = timeInSeconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
+  
+  const togglePlotting = () => {
+    if (isRunning) {
+      stopPlotting();
+    } else {
+      startPlotting();
+    }
+  };
 
   const startPlotting = () => {
     setIsRunning(true);
@@ -94,31 +102,35 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
   return (
     <Container>
       <Box sx={{ textAlign: 'center', mt: 4 }}>
-        <img src={logo} alt="Logo" style={{ width: '100px', marginBottom: '20px' }} />
+        <img src={logo} alt="Logo" style={{ width: '500px', marginBottom: '20px' }} />
       </Box>
       <Box sx={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '70vh',  // Adjust height to center vertically
+        height: '50vh',  // Adjust height to center vertically
         textAlign: 'center',
       }}>
-        <img src={isRunning ? runningImage : standingImage} alt="Character" style={{ width: '150px', height: 'auto', marginBottom: '20px' }} />
-        <Typography variant="h5" sx={{ marginBottom: '20px' }}>{formatTime(time)}</Typography>
-        <Button variant="contained" sx={{ bgcolor: green[500], '&:hover': { bgcolor: green[700] } }} onClick={isRunning ? stopPlotting : startPlotting}>
-          {isRunning ? 'End Plotting' : 'Start Plotting'}
-        </Button>
+        <img
+          src={isRunning ? runningImage : standingImage}
+          alt="Character"
+          style={{ width: '300px', height: 'auto', marginBottom: '20px', cursor: 'pointer' }}
+          onClick={togglePlotting}  // Toggle start/stop on click
+        />
+        <Typography variant="h5" sx={{ marginBottom: '20px', fontSize: '60px' }}>
+          {formatTime(time)}
+        </Typography>
       </Box>
 
       <Modal open={open} onClose={() => setOpen(false)}>
         <Box sx={{ width: 300, bgcolor: 'background.paper', p: 4, m: 'auto', mt: 5 }}>
-          <Typography variant="h6" gutterBottom>Choose Your Character</Typography>
+          <Typography variant="h6" gutterBottom>당신만의 플로그를 생성하세요</Typography>
           
           {error && <Alert severity="error">{error}</Alert>}
 
           <TextField
-            label="Name"
+            label="플로그 이름"
             value={name}
             onChange={(e) => setName(e.target.value)}
             fullWidth
@@ -146,7 +158,7 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
 
           {/* Theme Selection */}
           <FormControl fullWidth margin="normal">
-            <InputLabel sx={{ color: green[500] }}>Theme</InputLabel>
+            <InputLabel sx={{ color: green[500] }}>분위기</InputLabel>
             <Select
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
@@ -173,7 +185,7 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
 
           {/* Color Selection */}
           <FormControl fullWidth margin="normal">
-            <InputLabel sx={{ color: green[500] }}>Color</InputLabel>
+            <InputLabel sx={{ color: green[500] }}>테마 색</InputLabel>
             <Select
               value={color}
               onChange={(e) => setColor(e.target.value)}
@@ -222,7 +234,7 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
           </FormControl>
 
           <TextField
-            label="Animal"
+            label="모티베이션 동물"
             value={animal}
             onChange={(e) => setAnimal(e.target.value)}
             fullWidth
@@ -249,14 +261,14 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
           />
 
           <Button variant="contained" sx={{ bgcolor: green[500], '&:hover': { bgcolor: green[700] } }} onClick={handleGenerate} fullWidth disabled={loading}>
-            Generate Character
+            플로그 생성하기
           </Button>
 
           {loading && (
             <Box sx={{ mt: 3, textAlign: 'center' }}>
               <CircularProgress sx={{ color: green[500] }} />
               <Typography variant="body2" color="error" sx={{ mt: 2 }}>
-                Loading... Please do not close this window. Closing may cause errors.
+                생성중입니다. 잠시만 기다려주세요.
               </Typography>
             </Box>
           )}

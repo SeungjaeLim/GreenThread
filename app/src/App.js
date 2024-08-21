@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider, Box } from '@mui/material';
 import AuthForm from './components/Auth/AuthForm';
 import Plotting from './components/Plotting';
 import CharacterList from './components/CharacterList';
-import { Fab, Box } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import ListIcon from '@mui/icons-material/List';
-import PersonIcon from '@mui/icons-material/Person';
+import Fab from '@mui/material/Fab';
 import theme from './theme';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import HomeIcon from '@mui/icons-material/Home';
+import PublicIcon from '@mui/icons-material/Public';
+import './index.css';
 function App() {
   const [userId, setUserId] = useState(null);
   const [isRegistering, setIsRegistering] = useState(false);
@@ -24,11 +25,21 @@ function App() {
   if (!userId) {
     return (
       <ThemeProvider theme={theme}>
-      <AuthForm
-        isRegistering={isRegistering}
-        onAuthSuccess={handleAuthSuccess}
-        onSwitchMode={() => setIsRegistering(!isRegistering)}
-      /></ThemeProvider>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+          }}
+        >
+          <AuthForm
+            isRegistering={isRegistering}
+            onAuthSuccess={handleAuthSuccess}
+            onSwitchMode={() => setIsRegistering(!isRegistering)}
+          />
+        </Box>
+      </ThemeProvider>
     );
   }
 
@@ -49,15 +60,36 @@ function App() {
           gap: 2 
         }}
       >
-        <Fab color="primary" onClick={() => setView('plotting')} aria-label="plotting">
-          <AddIcon />
-        </Fab>
-        <Fab color="secondary" onClick={handleViewMyCharacters} aria-label="my characters">
-          <PersonIcon />
-        </Fab>
-        <Fab color="default" onClick={handleViewAllCharacters} aria-label="all characters">
-          <ListIcon />
-        </Fab>
+        <Fab 
+            sx={{ 
+              bgcolor: '#388E3C', // Darker green
+              '&:hover': { bgcolor: '#2E7D32' } // Even darker on hover
+            }} 
+            onClick={() => setView('plotting')} 
+            aria-label="plotting"
+          >
+            <DirectionsRunIcon sx={{ color: '#FFFFFF' }}/>
+          </Fab>
+          <Fab 
+            sx={{ 
+              bgcolor: '#2E7D32', // Even darker green
+              '&:hover': { bgcolor: '#1B5E20' } // Even darker on hover
+            }} 
+            onClick={handleViewMyCharacters} 
+            aria-label="my characters"
+          >
+            <HomeIcon sx={{ color: '#FFFFFF' }}/>
+          </Fab>
+          <Fab 
+            sx={{ 
+              bgcolor: '#1B5E20', // Darkest green
+              '&:hover': { bgcolor: '#004d40' } // Even darker on hover
+            }} 
+            onClick={handleViewAllCharacters} 
+            aria-label="all characters"
+          >
+            <PublicIcon sx={{ color: '#FFFFFF' }}/>
+          </Fab>
       </Box>
     </div>
   );

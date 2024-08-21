@@ -48,7 +48,7 @@ const CharacterCard = ({ character, onLike }) => {
       <Card onClick={handleOpenModal} style={{ cursor: 'pointer' }}>
         <CardMedia
           component="img"
-          height="140"
+          height="300"
           image={imageSrc}
           alt={character.animal}
         />
@@ -56,9 +56,9 @@ const CharacterCard = ({ character, onLike }) => {
           <Typography variant="h6">{character.name}</Typography> {/* Display character name */}
           <Box display="flex" justifyContent="space-between" alignItems="center" mt={1}>
             <Box display="flex" alignItems="center">
-              <IconButton onClick={handleLike}>
-                <FavoriteIcon />
-              </IconButton>
+                <IconButton onClick={handleLike}>
+                    <FavoriteIcon sx={{ color: 'red' }} />
+                </IconButton>
               <Typography variant="body2">{likeCount}</Typography> {/* Show like count next to the heart */}
             </Box>
             <Typography variant="body2" color="textSecondary">{character.user_id}</Typography> {/* Display username on the right */}
@@ -73,9 +73,6 @@ const CharacterCard = ({ character, onLike }) => {
         aria-describedby="modal-description"
       >
         <Box sx={{ maxWidth: 400, margin: 'auto', marginTop: '10%', backgroundColor: 'white', padding: 2 }}>
-          <Typography id="modal-title" variant="h6" component="h2">
-            {character.name}
-          </Typography>
           <img src={imageSrc} alt={character.animal} style={{ width: '100%' }} />
         </Box>
       </Modal>
