@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Button, TextField, Container, Typography, Link, Alert } from '@mui/material';
+import { Button, TextField, Container, Typography, Link, Alert, Box } from '@mui/material';
 import { loginUser, registerUser } from '../../api/api';
+import logo from '../../assets/images/logo.png';
 
 const AuthForm = ({ isRegistering, onAuthSuccess, onSwitchMode }) => {
   const [id, setId] = useState('');
@@ -30,9 +31,9 @@ const AuthForm = ({ isRegistering, onAuthSuccess, onSwitchMode }) => {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" gutterBottom>
-        {isRegistering ? 'Register' : 'Login'}
-      </Typography>
+      <Box sx={{ textAlign: 'center', mt: 4 }}>
+        <img src={logo} alt="Logo" style={{ width: '500px', marginBottom: '20px' }} />
+      </Box>
       {error && <Alert severity="error">{error}</Alert>}
       {success && <Alert severity="success">{success}</Alert>}
       <form onSubmit={handleSubmit}>

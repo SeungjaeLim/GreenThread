@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Button, Container, Typography, Modal, Box, TextField, Select, MenuItem, InputLabel, FormControl, Alert } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Button, Container, Typography, Modal, Box, TextField, Select, MenuItem, InputLabel, FormControl, Alert, CircularProgress } from '@mui/material';
+import { green } from '@mui/material/colors';  // Import green color palette
 import { generateCharacter } from '../api/api';
 import runningImage from '../assets/images/running.png';
 import standingImage from '../assets/images/standing.png';
+import logo from '../assets/images/logo.png';
 
 const themes = [
   '귀여운', 
@@ -20,23 +22,38 @@ const colors = [
   { name: 'White', value: 'white' },
 ];
 
-const Plotting = ({ userId }) => {
+const Plotting = ({ userId, onViewMyCharacters }) => {
   const [isRunning, setIsRunning] = useState(false);
   const [time, setTime] = useState(0);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [theme, setTheme] = useState('');
   const [color, setColor] = useState('');
   const [animal, setAnimal] = useState('');
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    let timer;
+    if (isRunning) {
+      timer = setInterval(() => {
+        setTime(prevTime => prevTime + 1);
+      }, 1000);
+    } else {
+      clearInterval(timer);
+    }
+    return () => clearInterval(timer);
+  }, [isRunning]);
+
+  const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  };
+
   const startPlotting = () => {
     setIsRunning(true);
     setTime(0);
-    const timer = setInterval(() => {
-      setTime(prevTime => prevTime + 1);
-    }, 1000);
-    return () => clearInterval(timer);
   };
 
   const stopPlotting = () => {
@@ -56,21 +73,43 @@ const Plotting = ({ userId }) => {
   const handleGenerate = async () => {
     if (!validateForm()) return;
 
+    setLoading(true);
+
     try {
       await generateCharacter(userId, name, theme, color, animal);
-      setOpen(false);
+      
+      // Simulate a loading delay of 30 seconds
+      setTimeout(() => {
+        setLoading(false);
+        setOpen(false);
+        onViewMyCharacters();  // Switch to the My Characters view
+      }, 30000);
+
     } catch (error) {
       console.error('Error generating character', error);
+      setLoading(false);
     }
   };
 
   return (
     <Container>
-      <Typography variant="h5">Time: {time} seconds</Typography>
-      <img src={isRunning ? runningImage : standingImage} alt="Character" style={{ width: '100%', height: 'auto' }} />
-      <Button variant="contained" color="primary" onClick={isRunning ? stopPlotting : startPlotting}>
-        {isRunning ? 'End Plotting' : 'Start Plotting'}
-      </Button>
+      <Box sx={{ textAlign: 'center', mt: 4 }}>
+        <img src={logo} alt="Logo" style={{ width: '100px', marginBottom: '20px' }} />
+      </Box>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '70vh',  // Adjust height to center vertically
+        textAlign: 'center',
+      }}>
+        <img src={isRunning ? runningImage : standingImage} alt="Character" style={{ width: '150px', height: 'auto', marginBottom: '20px' }} />
+        <Typography variant="h5" sx={{ marginBottom: '20px' }}>{formatTime(time)}</Typography>
+        <Button variant="contained" sx={{ bgcolor: green[500], '&:hover': { bgcolor: green[700] } }} onClick={isRunning ? stopPlotting : startPlotting}>
+          {isRunning ? 'End Plotting' : 'Start Plotting'}
+        </Button>
+      </Box>
 
       <Modal open={open} onClose={() => setOpen(false)}>
         <Box sx={{ width: 300, bgcolor: 'background.paper', p: 4, m: 'auto', mt: 5 }}>
@@ -84,15 +123,45 @@ const Plotting = ({ userId }) => {
             onChange={(e) => setName(e.target.value)}
             fullWidth
             margin="normal"
+            sx={{
+              '& label.Mui-focused': {
+                color: green[700],
+              },
+              '& .MuiInput-underline:after': {
+                borderBottomColor: green[700],
+              },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: green[500],
+                },
+                '&:hover fieldset': {
+                  borderColor: green[700],
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: green[700],
+                },
+              },
+            }}
           />
 
           {/* Theme Selection */}
           <FormControl fullWidth margin="normal">
-            <InputLabel>Theme</InputLabel>
+            <InputLabel sx={{ color: green[500] }}>Theme</InputLabel>
             <Select
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
               label="Theme"
+              sx={{
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: green[500],
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: green[700],
+                },
+                '& .MuiSelect-icon': {
+                  color: green[500],
+                },
+              }}
             >
               {themes.map((theme) => (
                 <MenuItem key={theme} value={theme}>
@@ -104,7 +173,7 @@ const Plotting = ({ userId }) => {
 
           {/* Color Selection */}
           <FormControl fullWidth margin="normal">
-            <InputLabel>Color</InputLabel>
+            <InputLabel sx={{ color: green[500] }}>Color</InputLabel>
             <Select
               value={color}
               onChange={(e) => setColor(e.target.value)}
@@ -123,6 +192,17 @@ const Plotting = ({ userId }) => {
                   {selected}
                 </Box>
               )}
+              sx={{
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: green[500],
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: green[700],
+                },
+                '& .MuiSelect-icon': {
+                  color: green[500],
+                },
+              }}
             >
               {colors.map((color) => (
                 <MenuItem key={color.value} value={color.value}>
@@ -147,11 +227,39 @@ const Plotting = ({ userId }) => {
             onChange={(e) => setAnimal(e.target.value)}
             fullWidth
             margin="normal"
+            sx={{
+              '& label.Mui-focused': {
+                color: green[700],
+              },
+              '& .MuiInput-underline:after': {
+                borderBottomColor: green[700],
+              },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: green[500],
+                },
+                '&:hover fieldset': {
+                  borderColor: green[700],
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: green[700],
+                },
+              },
+            }}
           />
 
-          <Button variant="contained" color="primary" onClick={handleGenerate} fullWidth>
+          <Button variant="contained" sx={{ bgcolor: green[500], '&:hover': { bgcolor: green[700] } }} onClick={handleGenerate} fullWidth disabled={loading}>
             Generate Character
           </Button>
+
+          {loading && (
+            <Box sx={{ mt: 3, textAlign: 'center' }}>
+              <CircularProgress sx={{ color: green[500] }} />
+              <Typography variant="body2" color="error" sx={{ mt: 2 }}>
+                Loading... Please do not close this window. Closing may cause errors.
+              </Typography>
+            </Box>
+          )}
         </Box>
       </Modal>
     </Container>
