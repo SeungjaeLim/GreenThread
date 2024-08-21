@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Container, Typography, Modal, Box, TextField, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Button, Container, Typography, Modal, Box, TextField, Select, MenuItem, InputLabel, FormControl, Alert } from '@mui/material';
 import { generateCharacter } from '../api/api';
 import runningImage from '../assets/images/running.png';
 import standingImage from '../assets/images/standing.png';
@@ -28,6 +28,7 @@ const Plotting = ({ userId }) => {
   const [theme, setTheme] = useState('');
   const [color, setColor] = useState('');
   const [animal, setAnimal] = useState('');
+  const [error, setError] = useState('');
 
   const startPlotting = () => {
     setIsRunning(true);
@@ -43,7 +44,18 @@ const Plotting = ({ userId }) => {
     setOpen(true);
   };
 
+  const validateForm = () => {
+    if (!name || !theme || !color || !animal) {
+      setError('All fields are required!');
+      return false;
+    }
+    setError('');
+    return true;
+  };
+
   const handleGenerate = async () => {
+    if (!validateForm()) return;
+
     try {
       await generateCharacter(userId, name, theme, color, animal);
       setOpen(false);
@@ -63,6 +75,9 @@ const Plotting = ({ userId }) => {
       <Modal open={open} onClose={() => setOpen(false)}>
         <Box sx={{ width: 300, bgcolor: 'background.paper', p: 4, m: 'auto', mt: 5 }}>
           <Typography variant="h6" gutterBottom>Choose Your Character</Typography>
+          
+          {error && <Alert severity="error">{error}</Alert>}
+
           <TextField
             label="Name"
             value={name}
