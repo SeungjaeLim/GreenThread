@@ -72,7 +72,7 @@ def generate_character(request: CharacterGenerateRequest, db: Session = Depends(
 
 
 @router.get("/view_user/{user_id}")
-def view_user(user_id: str, db: Session = Depends(get_db)):  # Changed user_id to str
+def view_user(user_id: str, db: Session = Depends(get_db)):
     characters = db.query(Character).filter_by(user_id=user_id).all()
     return [
         {
@@ -80,7 +80,8 @@ def view_user(user_id: str, db: Session = Depends(get_db)):  # Changed user_id t
             "image_url": char.image_url,
             "theme": char.theme,
             "color": char.color,
-            "animal": char.animal
+            "animal": char.animal,
+            "like_count": char.like_count  # Include like_count
         } 
         for char in characters
     ]
@@ -95,10 +96,26 @@ def view_all(db: Session = Depends(get_db)):
             "image_url": char.image_url,
             "theme": char.theme,
             "color": char.color,
-            "animal": char.animal
+            "animal": char.animal,
+            "like_count": char.like_count  # Include like_count
         }
         for char in characters
     ]
+
+@router.post("/like/{character_id}")
+def like_image(character_id: int, db: Session = Depends(get_db)):
+    character = db.query(Character).filter_by(id=character_id).first()
+    if not character:
+        raise HTTPException(status_code=404, detail="Character not found.")
+    
+    # Increment the like_count
+    character.like_count += 1
+    
+    # Save the changes to the database
+    db.commit()
+    
+    return {"message": "Character liked", "character_id": character.id, "like_count": character.like_count}
+
 
 
 @router.get("/image/{character_id}")

@@ -26,7 +26,7 @@ class Character(Base):
     theme = Column(String(50), nullable=False)
     color = Column(String(50), nullable=False)
     animal = Column(String(50), nullable=False)
-    liked = Column(Boolean, default=False)
+    like_count = Column(Integer, default=0) 
 
 def init_db():
     Base.metadata.create_all(bind=engine)
