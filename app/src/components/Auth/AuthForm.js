@@ -32,7 +32,7 @@ const AuthForm = ({ isRegistering, onAuthSuccess, onSwitchMode }) => {
   return (
     <Container maxWidth="sm">
       <Box sx={{ textAlign: 'center', mt: 4 }}>
-        <img src={logo} alt="Logo" style={{ width: '500px', marginBottom: '20px' }} />
+        <img src={logo} alt="Logo" style={{ width: '80%', marginBottom: '20px' }} />
       </Box>
       {error && <Alert severity="error">{error}</Alert>}
       {success && <Alert severity="success">{success}</Alert>}

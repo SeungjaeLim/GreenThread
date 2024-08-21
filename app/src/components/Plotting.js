@@ -102,7 +102,7 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
   return (
     <Container>
       <Box sx={{ textAlign: 'center', mt: 4 }}>
-        <img src={logo} alt="Logo" style={{ width: '500px', marginBottom: '20px' }} />
+        <img src={logo} alt="Logo" style={{ width: '80%', marginBottom: '20px' }} />
       </Box>
       <Box sx={{
         display: 'flex',
