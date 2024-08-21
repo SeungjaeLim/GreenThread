@@ -21,7 +21,7 @@ def generate_character_image(character_id: int, theme: str, color: str, animal: 
     translated_theme = translate_theme(theme)  # Translate the theme
     client = openai.OpenAI(api_key=config.OPENAI_API_KEY)
     prompt = (
-        f"Create a character design for a new Pokémon-style creature. It mean 2D Japanese animal style."
+        f"Create a character Image for a new Pokémon-style creature. It mean 2D Japanese animal style."
         f"You must give just only One character that acting some move. No description, no extra shape in image."
         f"The creature should be a "
         f"medium-sized, bipedal creature with a blend of animal and mythical elements. "

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardMedia, CardContent, Typography, IconButton, Modal, Box } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { likeCharacter, getCharacterImage } from '../api/api';
 import axios from 'axios';
 
 const CharacterCard = ({ character, onLike }) => {
@@ -12,13 +13,9 @@ const CharacterCard = ({ character, onLike }) => {
     // Fetch the image from the backend API when the component mounts
     const fetchImage = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/v1/image/${character.id}`, {
-          responseType: 'blob',
-          headers: {
-            'ngrok-skip-browser-warning': true,
-          },
-        });
-        const imageUrl = URL.createObjectURL(response.data);
+        // Use the getCharacterImage function from api.js
+        const imageBlob = await getCharacterImage(character.id);
+        const imageUrl = URL.createObjectURL(imageBlob);
         setImageSrc(imageUrl);
       } catch (error) {
         console.error('Error fetching image:', error);
@@ -39,7 +36,8 @@ const CharacterCard = ({ character, onLike }) => {
   const handleLike = async (e) => {
     e.stopPropagation(); // Prevent card click event
     try {
-      await axios.post(`https://2d97-182-226-43-93.ngrok-free.app/api/v1/like/${character.id}`);
+      // Use the likeCharacter function from api.js
+      await likeCharacter(character.id);
       setLikeCount(likeCount + 1); // Increment like count locally
     } catch (error) {
       console.error('Error liking character:', error);

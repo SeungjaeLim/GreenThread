@@ -21,6 +21,10 @@ export const generateCharacter = (userId, name, theme, color, animal) => {
   return axiosInstance.post('/generate', { user_id: userId, name, theme, color, animal });
 };
 
+export const likeCharacter = (characterId) => {
+  return axiosInstance.post('/like', { character_id: characterId });
+};
+
 export const getMyCharacters = (userId) => {
   return axiosInstance.get(`/view_user/${userId}`);
 };
@@ -29,6 +33,7 @@ export const getAllCharacters = () => {
   return axiosInstance.get('/view_all');
 };
 
-export const likeCharacter = (characterId) => {
-  return axiosInstance.post(`/like/${characterId}`);
+export const getCharacterImage = async (characterId) => {
+  const response = await axiosInstance.get(`/image/${characterId}`, { responseType: 'blob' });
+  return response.data;
 };
