@@ -36,7 +36,7 @@ const CharacterCard = ({ character, onLike }) => {
   const handleLike = async (e) => {
     e.stopPropagation(); // Prevent card click event
     try {
-      await axios.post(`http://127.0.0.1:8000/api/v1/like/${character.id}`);
+      await axios.post(`https://2d97-182-226-43-93.ngrok-free.app/api/v1/like/${character.id}`);
       setLikeCount(likeCount + 1); // Increment like count locally
     } catch (error) {
       console.error('Error liking character:', error);

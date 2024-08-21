@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8000/api/v1';
+const API_URL = 'https://2d97-182-226-43-93.ngrok-free.app/api/v1';
 
 export const registerUser = (id, phoneNumber) => {
   return axios.post(`${API_URL}/register`, { id, phone_number: phoneNumber });
