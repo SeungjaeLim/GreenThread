@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.b1f43d39.css","mappings":"AAAA,WACE,sBAAyB,CACzB,eAAmB,CACnB,yFACF,CAEA,YACE,sBACF","sources":["index.css"],"sourcesContent":["@font-face {\n  font-family: \"Pretendard\";\n  font-weight: normal;\n  src: url(\"./font/Pretendard.otf\") format(\"opentype\");\n}\n\nbody, html, * {\n  font-family: \"Pretendard\";\n}\n"],"names":[],"sourceRoot":""}

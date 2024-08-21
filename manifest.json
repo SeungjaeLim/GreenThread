@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Grean Thread",
+  "name": "나만의 플로그를 만드는 플로깅. 그린쓰레드",
   "icons": [
     {
       "src": "favicon.ico",
