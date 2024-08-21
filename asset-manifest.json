@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/GreenThread/static/css/main.b1f43d39.css",
-    "main.js": "/GreenThread/static/js/main.10066fc8.js",
+    "main.js": "/GreenThread/static/js/main.0fa6a567.js",
     "static/js/453.5565870f.chunk.js": "/GreenThread/static/js/453.5565870f.chunk.js",
     "static/media/Pretendard.otf": "/GreenThread/static/media/Pretendard.4e72d46e664b88a6b5c8.otf",
     "static/media/logo.png": "/GreenThread/static/media/logo.91966b19dcde350f4c5a.png",
@@ -9,11 +9,11 @@
     "static/media/standing.png": "/GreenThread/static/media/standing.7e37ec5255c821d15a3b.png",
     "index.html": "/GreenThread/index.html",
     "main.b1f43d39.css.map": "/GreenThread/static/css/main.b1f43d39.css.map",
-    "main.10066fc8.js.map": "/GreenThread/static/js/main.10066fc8.js.map",
+    "main.0fa6a567.js.map": "/GreenThread/static/js/main.0fa6a567.js.map",
     "453.5565870f.chunk.js.map": "/GreenThread/static/js/453.5565870f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b1f43d39.css",
-    "static/js/main.10066fc8.js"
+    "static/js/main.0fa6a567.js"
   ]
 }
