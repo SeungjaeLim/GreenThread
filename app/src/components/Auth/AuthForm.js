@@ -54,7 +54,7 @@ const AuthForm = ({ isRegistering, onAuthSuccess, onSwitchMode }) => {
           margin="normal"
         />
         <TextField
-          label="전화번호"
+          label="전화번호 뒷자리 4자리"
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
           fullWidth
@@ -63,7 +63,7 @@ const AuthForm = ({ isRegistering, onAuthSuccess, onSwitchMode }) => {
         />
         {isRegistering && (
           <TextField
-            label="전화번호 확인"
+            label="전화번호 뒷자리 4자리 확인"
             value={confirmPhoneNumber}
             onChange={(e) => setConfirmPhoneNumber(e.target.value)}
             fullWidth
@@ -76,7 +76,11 @@ const AuthForm = ({ isRegistering, onAuthSuccess, onSwitchMode }) => {
         </Button>
       </form>
       <Typography variant="body2" align="center" marginTop={2}>
+      <>
+                그린쓰레드는 회원가입 시 비밀번호 대신 전화번호 뒷자리 4자리를 사용합니다.{' '}
+            </><div>    </div>
         {isRegistering ? (
+            
           <>
             계정이 있으신가요?{' '}
             <Link component="button" variant="body2" onClick={onSwitchMode}>

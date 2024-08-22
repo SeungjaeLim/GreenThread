@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Typography, Modal, Box, TextField, Select, MenuItem, InputLabel, FormControl, Alert, CircularProgress } from '@mui/material';
-import { green } from '@mui/material/colors';  // Import green color palette
+import { green, red } from '@mui/material/colors';  // Import green and red color palettes
 import { generateCharacter } from '../api/api';
 import runningImage from '../assets/images/running.png';
 import standingImage from '../assets/images/standing.png';
@@ -32,6 +32,12 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
   const [color, setColor] = useState('');
   const [animal, setAnimal] = useState('');
   const [error, setError] = useState('');
+  
+  // States to track errors for each field
+  const [nameError, setNameError] = useState(false);
+  const [themeError, setThemeError] = useState(false);
+  const [colorError, setColorError] = useState(false);
+  const [animalError, setAnimalError] = useState(false);
 
   useEffect(() => {
     let timer;
@@ -70,10 +76,45 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
   };
 
   const validateForm = () => {
-    if (!name || !theme || !color || !animal) {
-      setError('All fields are required!');
+    let valid = true;
+    const missingFields = [];
+    if (!name) missingFields.push('플로그 이름');
+    if (!theme) missingFields.push('분위기');
+    if (!color) missingFields.push('테마 색');
+    if (!animal) missingFields.push('동물');
+    if (!name) {
+      setNameError(true);
+      valid = false;
+    } else {
+      setNameError(false);
+    }
+
+    if (!theme) {
+      setThemeError(true);
+      valid = false;
+    } else {
+      setThemeError(false);
+    }
+
+    if (!color) {
+      setColorError(true);
+      valid = false;
+    } else {
+      setColorError(false);
+    }
+
+    if (!animal) {
+      setAnimalError(true);
+      valid = false;
+    } else {
+      setAnimalError(false);
+    }
+
+    if (!valid) {
+        setError(`${missingFields.join(', ')}이(가) 결정되지 않았습니다.`);
       return false;
     }
+
     setError('');
     return true;
   };
@@ -137,20 +178,20 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
             margin="normal"
             sx={{
               '& label.Mui-focused': {
-                color: green[700],
+                color: nameError ? red[700] : green[700],
               },
               '& .MuiInput-underline:after': {
-                borderBottomColor: green[700],
+                borderBottomColor: nameError ? red[700] : green[700],
               },
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: green[500],
+                  borderColor: nameError ? red[500] : green[500],
                 },
                 '&:hover fieldset': {
-                  borderColor: green[700],
+                  borderColor: nameError ? red[700] : green[700],
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: green[700],
+                  borderColor: nameError ? red[700] : green[700],
                 },
               },
             }}
@@ -158,20 +199,20 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
 
           {/* Theme Selection */}
           <FormControl fullWidth margin="normal">
-            <InputLabel sx={{ color: green[500] }}>분위기</InputLabel>
+            <InputLabel sx={{ color: themeError ? red[500] : green[500] }}>분위기</InputLabel>
             <Select
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
               label="Theme"
               sx={{
                 '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: green[500],
+                  borderColor: themeError ? red[500] : green[500],
                 },
                 '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: green[700],
+                  borderColor: themeError ? red[700] : green[700],
                 },
                 '& .MuiSelect-icon': {
-                  color: green[500],
+                  color: themeError ? red[500] : green[500],
                 },
               }}
             >
@@ -185,7 +226,7 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
 
           {/* Color Selection */}
           <FormControl fullWidth margin="normal">
-            <InputLabel sx={{ color: green[500] }}>테마 색</InputLabel>
+            <InputLabel sx={{ color: colorError ? red[500] : green[500] }}>테마 색</InputLabel>
             <Select
               value={color}
               onChange={(e) => setColor(e.target.value)}
@@ -206,13 +247,13 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
               )}
               sx={{
                 '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: green[500],
+                  borderColor: colorError ? red[500] : green[500],
                 },
                 '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: green[700],
+                  borderColor: colorError ? red[700] : green[700],
                 },
                 '& .MuiSelect-icon': {
-                  color: green[500],
+                  color: colorError ? red[500] : green[500],
                 },
               }}
             >
@@ -241,20 +282,20 @@ const Plotting = ({ userId, onViewMyCharacters }) => {
             margin="normal"
             sx={{
               '& label.Mui-focused': {
-                color: green[700],
+                color: animalError ? red[700] : green[700],
               },
               '& .MuiInput-underline:after': {
-                borderBottomColor: green[700],
+                borderBottomColor: animalError ? red[700] : green[700],
               },
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: green[500],
+                  borderColor: animalError ? red[500] : green[500],
                 },
                 '&:hover fieldset': {
-                  borderColor: green[700],
+                  borderColor: animalError ? red[700] : green[700],
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: green[700],
+                  borderColor: animalError ? red[700] : green[700],
                 },
               },
             }}

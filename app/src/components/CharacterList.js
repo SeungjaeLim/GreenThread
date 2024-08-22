@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
 import CharacterCard from './CharacterCard';
 import { getMyCharacters, getAllCharacters, likeCharacter } from '../api/api';
 
@@ -31,13 +31,23 @@ const CharacterList = ({ userId, viewAll = false }) => {
 
   return (
     <Container>
-      <Grid container spacing={3}>
-        {characters.map(character => (
-          <Grid item xs={12} sm={6} md={4} key={character.id}>
-            <CharacterCard character={character} onLike={handleLike} />
-          </Grid>
-        ))}
-      </Grid>
+      {characters.length === 0 ? (
+        <Typography
+          variant="h6"
+          align="center"
+          style={{ marginTop: '20px', color: '#555' }}
+        >
+          아직 나만의 플로그가 없습니다. <br />플로깅을 통해 나만의 플로그를 생성해보세요.
+        </Typography>
+      ) : (
+        <Grid container spacing={3}>
+          {characters.map(character => (
+            <Grid item xs={12} sm={6} md={4} key={character.id}>
+              <CharacterCard character={character} onLike={handleLike} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
     </Container>
   );
 };
